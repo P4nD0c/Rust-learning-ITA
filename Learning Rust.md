@@ -49,11 +49,74 @@
 - |  **Descrizione** | **Tipi** | **Esempio** |
   | --- | --- | --- |
   | Interi con segno | `i8`,`i16`, `i32`, `i64`, `i128`, `isize` | `-10`, `0`, `1_000`, `123i64`|
-  | Interi senza segno| Dato B2 | Dato B3 |
-  | Numeri in virgola mobile | | |
-  | Valori scalari Unicode | | |
-  | Booleani | | |
-- > https://google.github.io/comprehensive-rust/it/types-and-values/values.html
+  | Interi senza segno| `u8`,`u16`, `u32`, `u64`, `u128`, `usize` | `0`, `123`, `10u16` |
+  | Numeri in virgola mobile | `f32`, `f64` | `3.14`,  `-10.0e20`, `2f32` |
+  | Valori scalari Unicode | `char` | `'a'`, `'α'`, `'∞'` |
+  | Booleani | `bool` | `true`, `false`|
+- > In rust si possono scrivere i numeri più grandi mettendo lo `_` ogni 3 cifre per facilitare la lettura. ex: `1_000`, `123_i64`
 -
+- ## Aritmetica
+- La sintassi matematica è la classica di ogni linguaggio di programmazione. infatti troviamo i soliti operatori aritmetici `+`, `-`, `*`, `/`
+- ```rust
+  fn interproduct(a: i32, b: i32, c: i32) -> i32 {
+      return a * b + b * c + c * a;
+  }
+  
+  fn main() {
+      println!("result: {}", interproduct(120, 100, 248));
+  }
+  ```
+-
+- ## Le Stringhe
+- Possiamo trovare due tipologie di stringhe
+- > `String` -> Una stringa modificabile e propria
+  > `&str` -> Una stringa di **sola lettura**
+- ```rust
+  fn main() {
+      let greeting: &str = "Greetings";
+      let planet: &str = "🪐";
+      let mut sentence: Strings = String::new();
+      sentence.push_str(greeting);
+      sentence.push_str(", ");
+      sentence.push_str(planet);
+      println!("final sentence: {}", sentence);
+      println!("{:?}", &sentence[0..5]);
+      //println!("{:?}", &sentence[12..13]); -> Non include tutti i byte di 🪐
+      //println!("{:?}", &sentence[11..15]); -> Include tutti i byte di 🪐
+  
+  }
+  ```
+- Dal seguente esempio possiamo capire tutto il necessario della manipolazione.
+	- le variabili di tipo `&str`; `greeting` e `planet` **non** possono essere modificate.
+		- la `&` di fa capire che indica una reference -> Qualcosa di esclusivamente modificabile
+	- la variabile `sentence` è di tipo `Strings` ed è stata dichiarata come *mutabile*
+	- Per aggiugnere delle stringhe ad una variabile stringa vuota è possibile usare il metodo `.push_str(<variabile/"contenuto">)`
+	- E' anche possibile utilizzare le **raw-strings**, ovvero delle stringhe dove non vengono contati i caratteri di esacpe. Il concetto è equivalente a quello di python anche nella forma.
+	- > E' oltretutto possibile fare una specie di ~slicing~  ma non è da visionare come quello di python, che si basa su caratteri, ma è da pensare "byte per byte" di conseguenza nell'esempio: `println!("{:?}", &sentence[12..13]);` riceveremmo un errore, perché l'emoji "🪐" non vale 1 singolo byte come ogni carattere, ma ne vale di più, quindi dovremmo includere la sua intera combinazione di byte e includerlo completamente, non parzialmente(come fatto nell'esempio)
+-
+- ## IF EXPRESSION
+- > Le `IF expression` in Rust funzionano in maniera simile a quella di C/C++ e Java.
+- ```rust
+  fn main() {
+      let x = 10;
+      if x < 20 {
+          println!("small");
+      } else if x < 100 {
+          println!("biggish");
+      } else {
+          println!("huge");
+      }
+  }
+  ```
+- > OUTPUT: `small`
+- La particolarità è che similmente a python si può utilizzare l'IF anche nelle variabili per definire il tutto in una sola linea.
+- ```rust
+  fn main() {
+      let x = 10;
+      let size = if x < 20 { "small" } else { "large" };
+      println!("number size: {}", size);
+  }
+  ```
+- > OUTPUT: `small`
 -
 -
