@@ -192,3 +192,22 @@
       println!("after: {a}");
   }
   ```
+-
+- ## Funzioni
+- ```rust
+  fn gcd(a: u32, b: u32) -> u32 {
+      if b > 0 {
+          gcd(b, a % b)
+      } else {
+          a
+      }
+  }
+  
+  fn main() {
+      println!("gcd: {}", gcd(143, 52));
+  }
+  ```
+- Nelle funzioni non abbiamo tassativamente bisogno del `return`
+- In Rust è buona norma definire sempre i tipi delle variabile di cui abbiamo bisogno all'interno della funzione e di dichiarare anche il tipo restituito.
+- Nel caso la funziona non devva restituire niente possiamo usare la dicitura `-> ()`, risulterebbe come semplice funzione di esecuzione.
+-
