@@ -119,4 +119,76 @@
   ```
 - > OUTPUT: `small`
 -
+- ## CICLI INTERATTIVI
+- ###  `while`
+	- Continua a ripetere una porzione di codice finché una condizione non risulta falsa.
+	- ```rust
+	  fn main() {
+	      let mut x = 200;
+	      while x >= 10 {
+	          x = x / 2;
+	      }
+	      println!("Final x: {x}");
+	  }
+	  ```
+- ### `for`
+	- Ripete una porzione di codice per un determinato range di valute.
+	- ```rust
+	  fn main() {
+	      for x in 1..5 {
+	          println!("x: {x}");
+	      }
+	  }
+	  ```
+	- In questo caso ripeterà l'istruzione da `1` fino a `4` in quanto `5` non è incluso.
+	- per includere anche il `5` dobbiamo utilizzare questa tipologia di espressione:
+	- ```rust
+	  fn main() {
+	      for x in 1..=5 {
+	          println!("x: {x}");
+	      }
+	  }```
+- ### `loop`
+	- Ripete all'infinito un espressione finché non troverà l'istruzione `break`
+	- ```rust
+	  fn main() {
+	      let mut i = 0;
+	      loop {
+	          i += 1;
+	          println!("{i}");
+	          if i > 100 {
+	              break;
+	          }
+	      }
+	  }
+	  ```
 -
+- ## Blocchi di istruzioni
+- In rust è possibile immettere dei blocchi d'istruzione semplicemente immettendo il codice all'interno delle parentesi graffe e immettere il risultato all'interno di una variabile.
+- ```rust
+  fn main() {
+      let z = 13;
+      let x = {
+          let y = 10;
+          println!("y: {y}");
+          z - y
+      };
+      println!("x: {x}");
+  }
+  ```
+- In più ci sono la **variabili di scopo**, ovvero variabili che all'interno di questi blocchi di codice rimangono indipendenti e che possono variabile ed essere ridichiarate e sovrapposte.
+- ```rust
+  fn main() {
+      let a = 10;
+      println!("before: {a}");
+      {
+          let a = "hello";
+          println!("inner scope: {a}");
+  
+          let a = true;
+          println!("shadowed in inner scope: {a}");
+      }
+  
+      println!("after: {a}");
+  }
+  ```
