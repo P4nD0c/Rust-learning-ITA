@@ -119,7 +119,7 @@
   ```
 - > OUTPUT: `small`
 -
-- ## CICLI INTERATTIVI
+- ## CICLI ITERATIVI
 - ###  `while`
 	- Continua a ripetere una porzione di codice finché una condizione non risulta falsa.
 	- ```rust
@@ -148,9 +148,9 @@
 	          println!("x: {x}");
 	      }
 	  }```
-- ### `loop`
-	- Ripete all'infinito un espressione finché non troverà l'istruzione `break`
-	- ```rust
+	  - ### `loop`
+	  - Ripete all'infinito un espressione finché non troverà l'istruzione `break`
+	  - ```rust
 	  fn main() {
 	      let mut i = 0;
 	      loop {
@@ -162,7 +162,17 @@
 	      }
 	  }
 	  ```
--
+- Un altro aspetto importante è quello dell'iterazione sugli array.
+- ```rust
+  fn main() {
+      let primes = [2, 3, 5, 7, 11, 13, 17, 19];
+      for prime in primes {
+          for i in 2..prime {
+              assert_ne!(prime % i, 0);
+          }
+      }
+  }
+  ```
 - ## Blocchi di istruzioni
 - In rust è possibile immettere dei blocchi d'istruzione semplicemente immettendo il codice all'interno delle parentesi graffe e immettere il risultato all'interno di una variabile.
 - ```rust
@@ -193,7 +203,7 @@
   }
   ```
 -
-- ## Funzioni
+- ## FUNZIONI
 - ```rust
   fn gcd(a: u32, b: u32) -> u32 {
       if b > 0 {
@@ -211,3 +221,84 @@
 - In Rust è buona norma definire sempre i tipi delle variabile di cui abbiamo bisogno all'interno della funzione e di dichiarare anche il tipo restituito.
 - Nel caso la funziona non devva restituire niente possiamo usare la dicitura `-> ()`, risulterebbe come semplice funzione di esecuzione.
 -
+- ## TUPLE ED ARRAY
+- Le tuple non sono mutabili, contrariamente agli array
+- |  **Descrizione** | **Tipi** | **Esempio** |
+  | --- | --- | --- |
+  | ARRAY | `let mut arr[type, n_elem] = [...]` | `let mut arr[i8, 5] = [42; 10];`|
+  | TUPLE | `let tup(type, type ....) = (...)` | `let tup(i8, &str) = (5, "mario")` |
+-
+- **ARRAY**
+- ```rust
+  fn main() {
+      let mut a: [i8; 10] = [42; 10];
+      a[5] = 0;
+      println!("a: {a:?}");
+  }
+  ```
+- > OUTPUT:`a: [42, 42, 42, 42, 42, 0, 42, 42, 42, 42]`
+	- In RUST è possibile anche usare una funzione di **pretty-printing** scrivendo all'interno del print`println!("a: {a:#?}");`
+- **TUPLA**
+- ```rust
+  fn main() {
+      let t: (i8, bool) = (7, true);
+      println!("t.0: {}", t.0);
+      println!("t.1: {}", t.1);
+  }
+  ```
+- > OUTPUT: 
+  ```
+  t.0: 7
+  t.1: true
+  ```
+-
+- ## PATTERN MATCHING
+- Simile al match-case di python.
+- ```rust
+  #[rustfmt::skip]
+  fn main() {
+      let input = 'q';
+      match input {
+          'q'                       => println!("Quitting"),
+          'a' | 's' | 'w' | 'd'     => println!("Moving around"),
+          '0'..='9'                 => println!("Number input"),
+          key if key.is_lowercase() => println!("Lowercase: {key}"),
+          _                         => println!("Something else"),
+      }
+  }
+  ```
+-
+-
+- ##
+- ## Destrutturazione di Enum
+- > La destrutturazione di un enum è l'estrapolazione di dati da una struttura contente dati tramite dei pattern che possono matchrare (essere uguali) oppure indefiniti `_`
+  
+  **TUPLE**
+- ```rust
+  fn main() {
+      describe_point((1, 0));
+  }
+  
+  fn describe_point(point: (i32, i32)) {
+      match point {
+          (0, _) => println!("on Y axis"),
+          (_, 0) => println!("on X axis"),
+          (x, _) if x < 0 => println!("left of Y axis"),
+          (_, y) if y < 0 => println!("below X axis"),
+          _ => println!("first quadrant"),
+      }
+  }
+  ```
+- **ARRAY**
+  ```rust
+  #[rustfmt::skip]
+  fn main() {
+      let triple = [0, -2, 3];
+      println!("Tell me about {triple:?}");
+      match triple {
+          [0, y, z] => println!("First is 0, y = {y}, and z = {z}"),
+          [1, ..]   => println!("First is 1 and the rest were ignored"),
+          _         => println!("All elements were ignored"),
+      }
+  }
+  ```
